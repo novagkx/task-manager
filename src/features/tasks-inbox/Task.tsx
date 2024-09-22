@@ -33,7 +33,6 @@ const TaskWrapper = styledMui(Box)(() => ({
   marginRight: 24,
   border: "1px solid #FFFFFF",
   padding: 10,
-  marginBottom: 15,
 }));
 
 const CustomIconButton = styledMui(IconButton)(({ theme }) => ({
@@ -57,7 +56,7 @@ interface TaskProps {
 const Task = ({ taskData, handleCompleteTask }: TaskProps) => {
   const selectedPage = useTasksStore((state) => state.selectedPage);
   const setIsEditingTask = useTasksStore((state) => state.setIsEditingTask);
-  const setIsOpen = useTasksStore((state) => state.setIsOpenModal);
+  const setIsOpen = useTasksStore((state) => state.setIsOpenEditModal);
 
   const openModal = () => {
     setIsOpen(true);
@@ -66,7 +65,7 @@ const Task = ({ taskData, handleCompleteTask }: TaskProps) => {
   return (
     <TaskWrapper>
       <CircleIcon onClick={() => handleCompleteTask(taskData.id)} />
-      <Typography>{taskData.taskName}</Typography>
+      <Typography>{taskData.text}</Typography>
       <CustomIconButton
         onClick={openModal}
         sx={{

@@ -4,14 +4,16 @@ import {
   TextField,
   Typography as MuiTypography,
   ListItem as MuiListItem,
+  Select as MuiSelect,
+  MenuItem,
   ListItemButton,
 } from "@mui/material";
 import { DateField as MuiDateField } from "@mui/x-date-pickers/DateField";
+
 import SearchIcon from "@mui/icons-material/Search";
 import { Dayjs } from "dayjs";
 import { useState } from "react";
 import theme from "../../styles/theme";
-import SelectPriority from "../../shared/select/SelectPriority";
 
 const FilterList = styledMui(List)(() => ({
   display: "flex",
@@ -42,6 +44,18 @@ const DateField = styledMui(MuiDateField)(({ theme }) => ({
   },
 }));
 
+const Select = styledMui(MuiSelect)(({ theme }) => ({
+  padding: 0,
+  marginLeft: 14,
+  marginTop: 10,
+  ".MuiSelect-select": {
+    color: theme.palette.common.black,
+    background: theme.palette.purple,
+  },
+  ".MuiSelect-outlined": {
+    border: "none",
+  },
+}));
 const CustomSearchIcon = styledMui(SearchIcon)(() => ({
   position: "absolute",
   right: 0,
@@ -83,38 +97,35 @@ const Filters = () => {
   return (
     <FilterList>
       <ListItem>
-        <Typography>Task name</Typography>
-        <CustomTextField type="search" placeholder="Choose">
+        <Typography>Название задачи</Typography>
+        <CustomTextField type="search" placeholder="Выберите">
           <CustomSearchIcon />
         </CustomTextField>
       </ListItem>
       <ListItem>
-        <Typography>Deadline (until)</Typography>
+        <Typography>Дедлайн (до)</Typography>
         <DateField
           value={deadline}
           onChange={(newValue) => setDeadline(newValue || undefined)}
         />
       </ListItem>
       <ListItem>
-        <Typography>Priority</Typography>
-        <SelectPriority
-          sxProps={{ marginLeft: 2, marginTop: 2 }}
-          priority={priority}
-          setPriority={setPriority}
-        />
-      </ListItem>
-      <ListItem sx={{ marginBlock: "auto" }}>
-        <ListItemButton
-          sx={{
-            justifyContent: "center",
-            background: theme.palette.purple,
-            "&:hover": {
-              background: theme.palette.purple,
-              border: `1px solid ${theme.palette.purple}`,
-            },
-          }}
+        <Typography>Приоритет</Typography>
+        <Select
+          value={priority}
+          label="priority"
+          onChange={(event) => setPriority(String(event.target.value))}
         >
-          Accept
+          <MenuItem value={""}>Clear</MenuItem>
+          <MenuItem value={"P1"}>P1</MenuItem>
+          <MenuItem value={"P2"}>P2</MenuItem>
+          <MenuItem value={"P3"}>P3</MenuItem>
+          <MenuItem value={"P4"}>P4</MenuItem>
+        </Select>
+      </ListItem>
+      <ListItem sx={{marginBlock: "auto"}}>
+        <ListItemButton sx={{ justifyContent: 'center', background: theme.palette.purple, '&:hover': { background: theme.palette.purple, border: `1px solid ${theme.palette.purple}` }}}>
+          Применить
         </ListItemButton>
       </ListItem>
     </FilterList>

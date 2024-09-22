@@ -1,10 +1,10 @@
  type Task = {
     id: number;
+    text: string;
     priority?: string; // p1 - p4
     description?: string;
     deadline?: string; 
     status: string; // complete / incomplete
-    taskName: string;
   }
 
 type TaskDto = {

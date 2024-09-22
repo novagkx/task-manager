@@ -50,7 +50,7 @@ const TaskBox = ({handleCompleteTask}: TaskBoxProps) => {
       { selectedPage === 'inbox' && (
         <>
           <InboxWrapper>
-            <Button sx={{background: 'transparent'}} onClick={() => setIsOpenBox((prev) => !prev)}>
+            <Button onClick={() => setIsOpenBox((prev) => !prev)}>
               {isOpenBox ? <CustomArrowDown /> : <CustomArrowRight />}
               <Typography>Inbox</Typography>
             </Button>
@@ -62,7 +62,7 @@ const TaskBox = ({handleCompleteTask}: TaskBoxProps) => {
       { selectedPage === 'today' && (
         <>
           <InboxWrapper>
-            <Button sx={{background: 'transparent'}} onClick={() => setIsOpenBox((prev) => !prev)}>
+            <Button onClick={() => setIsOpenBox((prev) => !prev)}>
               {isOpenBox ? <CustomArrowDown sx={{color: theme.palette.green }}/> : <CustomArrowRight sx={{color: theme.palette.green }}/>}
               <Typography>Today</Typography>
             </Button>
