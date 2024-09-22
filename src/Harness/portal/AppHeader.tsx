@@ -83,28 +83,18 @@ const CountIcon = styledMui(Typography)(({ theme }) => ({
   textAlign: "center",
 }));
 
-const iconsToolbar: Record<string, JSX.Element> = {
-  today: <CalendarTodayIcon />,
-  inbox: <InboxIcon />,
-};
-
 const AppHeader = () => {
   const setSelectedPage = useTasksStore((state) => state.setSelectedPage);
   const selectedPage = useTasksStore((state) => state.selectedPage);
   const todayTasksCount = useTasksStore((state) => state.tasks.today).length;
   const inboxTasksCount = useTasksStore((state) => state.tasks.inbox).length;
-  const setIsOpen = useTasksStore((state) => state.setIsOpenEditModal);
+  const setIsOpen = useTasksStore((state) => state.setIsOpenModal); 
 
   // useEffect(() => {
   //   // setTodayTasksCount(data.todayTasksCount)
   //   // setInboxTasksCount(data.inboxTasksCount)
   //   // получение данных от сервера
   // }, []);
-
-  const headerToolbar = [
-    { id: 1, title: "today", text: "Today" },
-    { id: 2, title: "inbox", text: "Inbox" },
-  ];
 
   const handleToolClick = (tool: string) => {
     setSelectedPage(tool);
@@ -119,44 +109,56 @@ const AppHeader = () => {
             @novagkx
           </Typography>
         </HeaderInner>
-        
-        <ListItemButton onClick={() => setIsOpen(true)}>
+
+        <ListItemButton onClick={() => {setIsOpen(true)}}>
           <AddCircleOutlineIcon />
           <Typography variant="h6">Add task</Typography>
         </ListItemButton>
+
         <List>
-          {headerToolbar.map((tool) => (
-            <ListItem key={tool.id}>
-              <ListItemButton
-                sx={{
-                  backgroundColor:
-                    selectedPage === tool.title
-                      ? theme.palette.background.default
-                      : "transparent",
-                  color:
-                    selectedPage === tool.title && selectedPage === "today"
-                      ? theme.palette.green
-                      : selectedPage === tool.title
-                      ? theme.palette.purple
-                      : theme.palette.common.white,
-                }}
-                onClick={() => handleToolClick(tool.title)}
-              >
-                {iconsToolbar[tool.title]}
-                <Typography variant="h6">{tool.text}</Typography>
-                {tool.title === "today" && (
-                  <CountIcon sx={{ backgroundColor: theme.palette.green }}>
-                    {todayTasksCount}
-                  </CountIcon>
-                )}
-                {tool.title === "inbox" && (
-                  <CountIcon sx={{ backgroundColor: theme.palette.purple }}>
-                    {inboxTasksCount}
-                  </CountIcon>
-                )}
-              </ListItemButton>
-            </ListItem>
-          ))}
+          <ListItem>
+            <ListItemButton
+              sx={{
+                backgroundColor:
+                  selectedPage === "today"
+                    ? theme.palette.background.default
+                    : "transparent",
+                color:
+                  selectedPage === "today"
+                    ? theme.palette.green
+                    : theme.palette.common.white,
+              }}
+              onClick={() => handleToolClick("today")}
+            >
+              <CalendarTodayIcon />
+              <Typography variant="h6">Today</Typography>
+              <CountIcon sx={{ backgroundColor: theme.palette.green }}>
+                {todayTasksCount}
+              </CountIcon>
+            </ListItemButton>
+          </ListItem>
+          <ListItem>
+            <ListItemButton
+              sx={{
+                backgroundColor:
+                  selectedPage === "inbox"
+                    ? theme.palette.background.default
+                    : "transparent",
+                color:
+                  selectedPage === "inbox"
+                    ? theme.palette.purple
+                    : theme.palette.common.white,
+              }}
+              onClick={() => handleToolClick("inbox")}
+            >
+              <InboxIcon />
+              <Typography variant="h6">Inbox</Typography>
+
+              <CountIcon sx={{ backgroundColor: theme.palette.purple }}>
+                {inboxTasksCount}
+              </CountIcon>
+            </ListItemButton>
+          </ListItem>
         </List>
       </HeaderWrapper>
     </AppBar>
