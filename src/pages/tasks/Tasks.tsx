@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Filters from "../../features/filters/Filters";
 import TaskBox from "../../features/tasks-inbox/TaskBox";
-import AddTaskModal from "../../shared/modal/AddTaskModal";
+import EditTaskModal from "../../shared/modal/EditTaskModal";
 import useTasksStore from "../../store/store";
 import Undo from "../../shared/snackbar/Undo";
 
@@ -34,7 +34,7 @@ const Tasks = () => {
     <>
       <Filters />
       <TaskBox handleCompleteTask={handleCompleteTask}/>
-      <AddTaskModal />
+      <EditTaskModal />
       <Undo refetch={refetch} isOpen={isNoticed} setIsNoticed={setIsNoticed}/>
     </>
   );
