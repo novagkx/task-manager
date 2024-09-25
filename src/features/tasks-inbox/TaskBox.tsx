@@ -37,37 +37,62 @@ const InboxWrapper = styledMui(Box)(() => ({
 }));
 
 interface TaskBoxProps {
-  handleCompleteTask: (idCompletedTask: number) => void
+  handleCompleteTask: (idCompletedTask: number) => void;
 }
-const TaskBox = ({handleCompleteTask}: TaskBoxProps) => {
+const TaskBox = ({ handleCompleteTask }: TaskBoxProps) => {
   const [isOpenBox, setIsOpenBox] = useState(true);
   const selectedPage = useTasksStore((state) => state.selectedPage);
-  const inboxTasks = useTasksStore((state) => state.tasks.inbox);
-  const todayTasks = useTasksStore((state) => state.tasks.today);
+  const tasks = useTasksStore((state) => state.tasks);
+  const todayTasks = tasks.filter((task) => task.today);
+  const inboxTasks = tasks.filter((task) => !task.today);
 
   return (
     <>
-      { selectedPage === 'inbox' && (
+      {selectedPage === "inbox" && (
         <>
           <InboxWrapper>
-            <Button sx={{background: 'transparent'}} onClick={() => setIsOpenBox((prev) => !prev)}>
+            <Button
+              sx={{ background: "transparent" }}
+              onClick={() => setIsOpenBox((prev) => !prev)}
+            >
               {isOpenBox ? <CustomArrowDown /> : <CustomArrowRight />}
               <Typography>Inbox</Typography>
             </Button>
           </InboxWrapper>
-          {isOpenBox && inboxTasks.map((task) =><Task handleCompleteTask={handleCompleteTask} key={task.id} taskData={task}/> )}
+          {isOpenBox &&
+            inboxTasks.map((task) => (
+              <Task
+                handleCompleteTask={handleCompleteTask}
+                key={task.id}
+                taskData={task}
+              />
+            ))}
         </>
       )}
 
-      { selectedPage === 'today' && (
+      {selectedPage === "today" && (
         <>
           <InboxWrapper>
-            <Button sx={{background: 'transparent'}} onClick={() => setIsOpenBox((prev) => !prev)}>
-              {isOpenBox ? <CustomArrowDown sx={{color: theme.palette.green }}/> : <CustomArrowRight sx={{color: theme.palette.green }}/>}
+            <Button
+              sx={{ background: "transparent" }}
+              onClick={() => setIsOpenBox((prev) => !prev)}
+            >
+              {isOpenBox ? (
+                <CustomArrowDown sx={{ color: theme.palette.green }} />
+              ) : (
+                <CustomArrowRight sx={{ color: theme.palette.green }} />
+              )}
               <Typography>Today</Typography>
             </Button>
           </InboxWrapper>
-          {isOpenBox && todayTasks.map((task) =><Task handleCompleteTask={handleCompleteTask} key={task.id} taskData={task}/> )}
+          {isOpenBox &&
+            todayTasks.map((task) => (
+              <Task
+                handleCompleteTask={handleCompleteTask}
+                key={task.id}
+                taskData={task}
+              />
+            ))}
         </>
       )}
     </>

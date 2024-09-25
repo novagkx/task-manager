@@ -4,11 +4,10 @@
     description?: string;
     deadline?: string; 
     status: string; // complete / incomplete
-    taskName: string;
+    title: string;
+    today: boolean;
   }
 
-type TaskDto = {
-  inbox: Task[],
-  today: Task[]
-}
-export type {Task, TaskDto};
+type TasksDto =  Task[];
+
+export type {Task, TasksDto as TaskDto};

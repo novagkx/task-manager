@@ -62,7 +62,7 @@ const EditTaskModal = () => {
         priority: isEditingTask.priority || "",
         deadline: isEditingTask.deadline ? dayjs(isEditingTask.deadline) : null,
       });
-      setValue(isEditingTask.taskName || "");
+      setValue(isEditingTask.title || "");
     }
     // иначе значит менюшка Add task, нужно отправить POST на добавление, перед этим проверку на dayjsdeadline.isValid()?
   }, [isEditingTask]);

@@ -86,9 +86,13 @@ const CountIcon = styledMui(Typography)(({ theme }) => ({
 const AppHeader = () => {
   const setSelectedPage = useTasksStore((state) => state.setSelectedPage);
   const selectedPage = useTasksStore((state) => state.selectedPage);
-  const todayTasksCount = useTasksStore((state) => state.tasks.today).length;
-  const inboxTasksCount = useTasksStore((state) => state.tasks.inbox).length;
-  const setIsOpen = useTasksStore((state) => state.setIsOpenModal); 
+  const tasks = useTasksStore((state) => state.tasks);
+  // const todayTasks = tasks.filter((task) => task.today);
+  // const inboxTasks = tasks.filter((task) => !task.today);
+  const todayTasksCount = tasks.filter((task) => task.today).length;
+  const inboxTasksCount = tasks.filter((task) => !task.today).length;
+
+  const setIsOpen = useTasksStore((state) => state.setIsOpenModal);
 
   // useEffect(() => {
   //   // setTodayTasksCount(data.todayTasksCount)
@@ -110,7 +114,11 @@ const AppHeader = () => {
           </Typography>
         </HeaderInner>
 
-        <ListItemButton onClick={() => {setIsOpen(true)}}>
+        <ListItemButton
+          onClick={() => {
+            setIsOpen(true);
+          }}
+        >
           <AddCircleOutlineIcon />
           <Typography variant="h6">Add task</Typography>
         </ListItemButton>

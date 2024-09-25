@@ -66,7 +66,7 @@ const Task = ({ taskData, handleCompleteTask }: TaskProps) => {
   return (
     <TaskWrapper>
       <CircleIcon onClick={() => handleCompleteTask(taskData.id)} />
-      <Typography>{taskData.taskName}</Typography>
+      <Typography>{taskData.title}</Typography>
       <CustomIconButton
         onClick={openModal}
         sx={{
