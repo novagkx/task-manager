@@ -11,6 +11,11 @@ import { useEffect, useState } from "react";
 import dayjs, { Dayjs } from "dayjs";
 import SelectPriority from "../select/SelectPriority";
 import { DateField } from "@mui/x-date-pickers";
+import { Task } from "../../models/tasks";
+import { useMutation } from "@tanstack/react-query";
+import { BASE_URL } from "../../constants/tasks";
+import axios from "axios";
+import taskMapper from "../../pages/tasks/taskMapper";
 
 const Dialog = styledMui(MuiDialog)(({ theme }) => ({
   ".MuiDialog-paper": {
@@ -41,6 +46,7 @@ type FilterDto = {
   deadline: Dayjs | null;
 };
 
+export type FilterTaskDto = FilterDto & Task;
 
 const EditTaskModal = () => {
   const isOpen = useTasksStore((state) => state.isModalOpen);
@@ -53,6 +59,12 @@ const EditTaskModal = () => {
     description: "",
     priority: "",
     deadline: null,
+  });
+
+  const updateTask = useMutation({
+    mutationFn: (taskData: Task) => {
+      return axios.put(`${BASE_URL}/tasks}`, taskData);
+    },
   });
 
   useEffect(() => {
@@ -130,7 +142,7 @@ const EditTaskModal = () => {
           <MuiBox
             sx={{ display: "flex", justifyContent: "flex-end", columnGap: 2 }}
           >
-            <Button onClick={() => {}}>Accept</Button>
+            <Button onClick={() => {console.log('updateTask.mutate()')}}>Accept</Button>
             <Button onClick={handleClose}>Cancel</Button>
           </MuiBox>
         </MuiBox>

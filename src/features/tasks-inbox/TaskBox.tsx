@@ -8,6 +8,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import Task from "./Task";
+import {Task as TaskType} from "../../models/tasks";
 import useTasksStore from "../../store/store";
 import theme from "../../styles/theme";
 
@@ -37,7 +38,7 @@ const InboxWrapper = styledMui(Box)(() => ({
 }));
 
 interface TaskBoxProps {
-  handleCompleteTask: (idCompletedTask: number) => void;
+  handleCompleteTask: (taskData: TaskType) => void;
 }
 const TaskBox = ({ handleCompleteTask }: TaskBoxProps) => {
   const [isOpenBox, setIsOpenBox] = useState(true);

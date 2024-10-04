@@ -9,6 +9,11 @@ import Snackbar, { SnackbarCloseReason } from "@mui/material/Snackbar";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import theme from "../../styles/theme";
+import useTasksStore from "../../store/store";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
+import { BASE_URL } from "../../constants/tasks";
+import { Task } from "../../models/tasks";
 
 interface SimpleSnackbarProps {
   isOpen: boolean;
@@ -47,12 +52,24 @@ const CustomSnackbar = styledMui(Snackbar)(({ theme }) => ({
   },
 }));
 
-const Undo = ({ isOpen, setIsNoticed, refetch }: SimpleSnackbarProps) => {
+const Undo = ({ isOpen, setIsNoticed }: SimpleSnackbarProps) => {
+  const deletedTask = useTasksStore((state) => state.deletedTask);
+  const setDeletedTask = useTasksStore((state) => state.setDeletedTask);
+  const queryClient = useQueryClient();
+  const addTask = useMutation({
+    mutationKey: ["tasks"],
+    mutationFn: (task: Task) => {
+      return axios.post(`${BASE_URL}/tasks`, task)
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+    }
+  });
+
   const handleClick = () => {
-    console.log("Вернули задачу");
     setIsNoticed(false);
-    refetch();
-    // refetch запрос к серверу, чтоб получить заново все задачи -> по сути перезапрос для возврата данной задачи
+    addTask.mutate(deletedTask as Task);
+    setDeletedTask(null);
   };
 
   const handleClose = (reason?: SnackbarCloseReason) => {
