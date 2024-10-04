@@ -94,12 +94,6 @@ const AppHeader = () => {
 
   const setIsOpen = useTasksStore((state) => state.setIsOpenModal);
 
-  // useEffect(() => {
-  //   // setTodayTasksCount(data.todayTasksCount)
-  //   // setInboxTasksCount(data.inboxTasksCount)
-  //   // получение данных от сервера
-  // }, []);
-
   const handleToolClick = (tool: string) => {
     setSelectedPage(tool);
   };

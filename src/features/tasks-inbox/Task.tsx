@@ -52,7 +52,7 @@ const Typography = styledMui(MuiTypography)(({ theme }) => ({
 
 interface TaskProps {
   taskData: TaskType;
-  handleCompleteTask: (idCompletedTask: number) => void;
+  handleCompleteTask: (taskData: TaskType) => void;
 }
 const Task = ({ taskData, handleCompleteTask }: TaskProps) => {
   const selectedPage = useTasksStore((state) => state.selectedPage);
@@ -65,7 +65,7 @@ const Task = ({ taskData, handleCompleteTask }: TaskProps) => {
   }
   return (
     <TaskWrapper>
-      <CircleIcon onClick={() => handleCompleteTask(taskData.id)} />
+      <CircleIcon onClick={() => handleCompleteTask(taskData)} />
       <Typography>{taskData.title}</Typography>
       <CustomIconButton
         onClick={openModal}
